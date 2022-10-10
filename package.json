@@ -5,7 +5,7 @@
   "dependencies": {
     "bootstrap": "^5.2.1",
     "braintree-web": "^3.45.0",
-    "braintree-web-drop-in-react": "^1.0.7",
+    "braintree-web-drop-in-react": "^1.2.1",
     "compression": "^1.7.4",
     "dotenv": "^8.6.0",
     "dotenv-expand": "^9.0.0",

@@ -41,3 +41,22 @@ export const getFilteredProducts = async (skip, limit, filters = {}) => {
     console.log(err);
   }
 };
+
+export const getBraintreeClientToken = async (userId, token) => {
+  try {
+    const response = await fetch(
+      `${API}/braintree/getToken/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
