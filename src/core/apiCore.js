@@ -34,4 +34,23 @@ export const read = async (productId) => {
   } catch (error) {
     console.log(error);
   }
+<<<<<<< HEAD
+=======
+}
+export const getFilteredProducts = async (skip, limit, filters = {}) => {
+  const data = { limit, skip, filters };
+  try {
+    const response = await fetch(`${API}/products/by/search`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+>>>>>>> 4b8ca3c3ee14cb7ff05b2cb40bd8ae06da5e7513
 };

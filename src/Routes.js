@@ -12,7 +12,6 @@ import AddCategory from "./admin/AddCategory";
 import AddProduct from "./admin/AddProduct";
 import Shop from "./core/Shop";
 import Product from "./core/Product";
-
 const Routes = () => {
   return (
     <BrowserRouter>
