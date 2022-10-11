@@ -24,3 +24,14 @@ export const getCategories = async () => {
     console.log(error);
   }
 };
+
+export const read = async (productId) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -61,6 +61,9 @@ const Shop = () => {
           </div>
         </div>
         <div className="col-8">{JSON.stringify(myFilters)}</div>
+        {/* <div className="col-lg-3 col-md-6 mb-3">
+            <ProductCart key={index} product={product} />
+        </div> */} sẽ thay thế code như v. Kha chỉnh them chi tiet sp
       </div>
     </Layout>
   );
