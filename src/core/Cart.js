@@ -18,7 +18,6 @@ const Cart = () => {
                 <hr />
                 {items.map((product, i) => (
                     <Card
-                        style={"width = 100%"}
                         key={i}
                         product={product}
                         showAddToCartButton={false}
@@ -27,7 +26,7 @@ const Cart = () => {
                     />
                 ))}
             </div>
-        )
+        );
     };
 
     const noItemsMessage = () => (
