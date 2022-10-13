@@ -6,10 +6,13 @@ import Card from "./Card";
 
 const Cart = () => {
     const [items, setItems] = useState([]);
-
-    useEffect(() => {
-        setItems(getCart())
-    }, [])
+    const [remove, setRemove] = useState(false);
+    function onChangeCart(){
+        setRemove(!remove);
+    }
+    useEffect(() => {  
+        setItems(getCart());
+    }, [remove]);
 
     const showItems = items => {
         return (
@@ -23,6 +26,7 @@ const Cart = () => {
                         showAddToCartButton={false}
                         cartUpdate={true}
                         showRemoveProductButton={true}
+                        onChange={onChangeCart}
                     />
                 ))}
             </div>

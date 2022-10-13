@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from "./ShowImage";
-import { addItem, updateItem } from "./CartHelpers";
+import { addItem, updateItem, removeItem } from "./CartHelpers";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-const ProductCart = ({ product, showAddToCartButton = true, cartUpdate= false }) => {
+const ProductCart = ({
+  product,
+  showAddToCartButton = true,
+  cartUpdate = false,
+  showRemoveProductButton = false,
+  onChange
+}) => {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
-
   const styleCard = {
     borderRadius: "0px",
   };
@@ -26,38 +31,55 @@ const ProductCart = ({ product, showAddToCartButton = true, cartUpdate= false })
   }
   const showAddToCart = showAddToCartButton => {
     return (
-        showAddToCartButton && (
-            <Button
-                onClick={addToCart}
-                variant="outline-warning" 
-                style={styleCard}
-            >
-                Add to cart
-            </Button>
-        )
+      showAddToCartButton && (
+        <Button
+          onClick={addToCart}
+          variant="outline-warning"
+          style={styleCard}
+        >
+          Add to cart
+        </Button>
+      )
     );
-};
-const handleChange = productId => event =>{
-  setCount(event.target.value < 1 ? 1 : event.target.value);
-  if(event.target.value >=  1){
-    updateItem(productId, event.target.value);
+  };
+  const unmountItem = () =>{
+    onChange(false);
+    removeItem(product._id);
   }
-}
-const showCartUpdateOption = cartUpdate =>{
+  const showRemoveButton = showRemoveProductButton => {
+    return (
+      showRemoveProductButton && (
+        <Button
+          onClick={() => unmountItem()}
+          variant="outline-danger"
+          style={styleCard}
+        >
+          Remove Product
+        </Button>
+      )
+    );
+  };
+  const handleChange = productId => event => {
+    setCount(event.target.value < 1 ? 1 : event.target.value);
+    if (event.target.value >= 1) {
+      updateItem(productId, event.target.value);
+    }
+  }
+  const showCartUpdateOption = cartUpdate => {
     return cartUpdate && <div>
       <div className="input-group mb-3">
         <div className="input-group-prepend">
           <span className="input-group-text">Adjust Quanlity </span>
         </div>
-        <input 
-        type="number" 
-        className="form-control" 
-        value={count} 
-        onChange={handleChange(product._id)}>
+        <input
+          type="number"
+          className="form-control"
+          value={count}
+          onChange={handleChange(product._id)}>
         </input>
       </div>
     </div>
-}
+  }
   return (
     <div className="col-lg-3 col-md-6 mb-3">
       <Card style={styleCard}>
@@ -80,6 +102,7 @@ const showCartUpdateOption = cartUpdate =>{
                 View Product
               </Button>
             </Link>
+            {showRemoveButton(showRemoveProductButton)}
             {showAddToCart(showAddToCartButton)}
             {showCartUpdateOption(cartUpdate)}
           </div>
