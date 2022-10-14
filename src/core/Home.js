@@ -33,6 +33,14 @@ const Home = () => {
   useEffect(() => {
     loadProductsByArrival();
     loadProductsBySell();
+    // clean các state sau khi page hiển thị này không được dùng nữa (chuyển qua page khác),
+    //  để đảm bảo state không bị trùng lặp và không xuất cảnh báo warning ở console 
+    // chi tiet xem o link https://stackoverflow.com/questions/54954385/react-useeffect-causing-cant-perform-a-react-state-update-on-an-unmounted-comp
+    return ()=>{
+      setError(false);
+      setProductByArrival([]);
+      setProductBySell([]);
+    }
   }, []);
 
   return (

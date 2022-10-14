@@ -3,32 +3,47 @@ import { Link } from "react-router-dom";
 import Layout from "./Layout";
 import { getCart } from "./CartHelpers";
 import Card from "./Card";
+import Checkout from "./Checkout";
 
 const Cart = () => {
+
     const [items, setItems] = useState([]);
     const [remove, setRemove] = useState(false);
-    function onChangeCart(){
+    const [itemCount, setItemCount] = useState(false);
+    function onRemoveItem() {
         setRemove(!remove);
     }
-    useEffect(() => {  
+    function onChangeItemCount() {
+        setItemCount(!itemCount);
+    }
+    useEffect(() => {
         setItems(getCart());
-    }, [remove]);
+        return () => {
+            setItems([]);
+            setItemCount(false);
+            setRemove(false);
+        }
+    }, [remove, itemCount]);
 
     const showItems = items => {
         return (
             <div>
                 <h2>Your cart has {`${items.length}`} items</h2>
                 <hr />
+                <div className="row">
                 {items.map((product, i) => (
                     <Card
+                        isCartView={true}
                         key={i}
                         product={product}
                         showAddToCartButton={false}
                         cartUpdate={true}
                         showRemoveProductButton={true}
-                        onChange={onChangeCart}
+                        onRemove={onRemoveItem}
+                        onChangeCount={onChangeItemCount}
                     />
                 ))}
+                </div>               
             </div>
         );
     };
@@ -50,7 +65,9 @@ const Cart = () => {
                     {items.length > 0 ? showItems(items) : noItemsMessage()}
                 </div>
                 <div className="col-6">
-                    <p className="mb-4">show checkout option/shipping adderss/total/update quanlity</p>
+                    <h2>Your cart sumary</h2>
+                    <hr />
+                    <Checkout products={items} />
                 </div>
             </div>
         </Layout>
