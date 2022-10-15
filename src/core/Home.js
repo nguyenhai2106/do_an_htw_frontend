@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { getProducts } from "../core/apiCore";
 import ProductCart from "../core/Card";
+import Search from "./Search";
 
 require("dotenv").config();
 
@@ -41,17 +42,22 @@ const Home = () => {
       description="Node.js React.js E-commerce App!"
       className={"container-fluid"}
     >
+      <Search />
       <h3 className="mb-2">Best Sellers</h3>
       <div className="row">
         {productBySell.map((product, index) => (
-          <ProductCart key={index} product={product} />
+          <div key={index} className="col-3 mb-3">
+            <ProductCart product={product} />
+          </div>
         ))}
       </div>
 
       <h3 className="mb-2">New Arrivals</h3>
       <div className="row">
         {productByArrival.map((product, index) => (
-          <ProductCart key={index} product={product} />
+          <div key={index} className="col-3 mb-3">
+            <ProductCart product={product} />
+          </div>
         ))}
       </div>
     </Layout>

@@ -1,4 +1,5 @@
 import { API } from "../config";
+import queryString from "query-string";
 
 export const getProducts = async (sortBy) => {
   try {
@@ -39,5 +40,19 @@ export const getFilteredProducts = async (skip, limit, filters = {}) => {
     return await response.json();
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const searchProducts = async (params) => {
+  console.log(params);
+  const query = queryString.stringify(params);
+  console.log("query", query);
+  try {
+    const response = await fetch(`${API}/products/search?${query}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
   }
 };

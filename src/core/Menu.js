@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 
 import { Link, withRouter } from "react-router-dom";
 
-import { signout, is, isAuthenticated } from "../auth/index";
+import { signout, isAuthenticated } from "../auth/index";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -14,7 +14,7 @@ const isActive = (history, path) => {
 
 const Menu = ({ history }) => (
   <div>
-    <ul className="nav bg-success">
+    <ul className="nav bg-primary">
       <li className="nav-item">
         <Link className="nav-link" style={isActive(history, "/")} to={"/"}>
           Home

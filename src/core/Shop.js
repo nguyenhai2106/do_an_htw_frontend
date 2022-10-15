@@ -4,14 +4,16 @@ import ProductCart from "../core/Card";
 import { getCategories, getFilteredProducts } from "./apiCore";
 import Checkbox from "./Checkbox";
 import Radiobox from "./RadioBox";
-
+import Button from "react-bootstrap/Button";
 import { prices } from "./fixedPrices";
+import Search from "./Search";
 
 const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
   const [skip, setSkip] = useState(0);
+  const [size, setSize] = useState(0);
   const [filteredResults, setfilteredResults] = useState([]);
 
   const [myFilters, setMyFilters] = useState({
@@ -34,9 +36,35 @@ const Shop = () => {
       if (data.error) {
         setError(data.error);
       } else {
-        setfilteredResults(data);
+        setfilteredResults(data.data);
+        setSize(data.size);
+        setSkip(0);
       }
     });
+  };
+
+  const loadMore = () => {
+    let toSkip = skip + limit;
+    getFilteredProducts(toSkip, limit, myFilters.filters).then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setfilteredResults([...filteredResults, ...data.data]);
+        setSize(data.size);
+        setSkip(toSkip);
+      }
+    });
+  };
+
+  const loadMoreButton = () => {
+    return (
+      size > 0 &&
+      size >= limit && (
+        <Button variant="outline-warning" onClick={loadMore} className="mb-3">
+          Add to Cart
+        </Button>
+      )
+    );
   };
 
   useEffect(() => {
@@ -73,8 +101,9 @@ const Shop = () => {
       description="Search and find product of your choice!"
       className={"container-fluid"}
     >
+      <Search />
       <div className="row">
-        <div className="col-4">
+        <div className="col-3">
           <h4>Filter by categories</h4>
           <ul style={{ listStyleType: "none", padding: "0px" }}>
             <Checkbox
@@ -91,7 +120,16 @@ const Shop = () => {
             />
           </div>
         </div>
-        <div className="col-8">{JSON.stringify(filteredResults)}</div>
+        <div className="col-9">
+          <div className="row">
+            {filteredResults.map((result, index) => (
+              <div className="col-4 mb-3" key={index}>
+                <ProductCart product={result} />
+              </div>
+            ))}
+          </div>
+          {loadMoreButton()}
+        </div>
       </div>
     </Layout>
   );
