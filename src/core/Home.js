@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { getProducts } from "../core/apiCore";
-import ProductCart from "../core/Card";
+import ProductCard from "../core/Card";
 import Search from "./Search";
 
 require("dotenv").config();
@@ -47,7 +47,7 @@ const Home = () => {
       <div className="row">
         {productBySell.map((product, index) => (
           <div key={index} className="col-3 mb-3">
-            <ProductCart product={product} />
+            <ProductCard product={product} />
           </div>
         ))}
       </div>
@@ -56,7 +56,7 @@ const Home = () => {
       <div className="row">
         {productByArrival.map((product, index) => (
           <div key={index} className="col-3 mb-3">
-            <ProductCart product={product} />
+            <ProductCard product={product} />
           </div>
         ))}
       </div>

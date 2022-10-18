@@ -56,3 +56,77 @@ export const searchProducts = async (params) => {
     console.log(error);
   }
 };
+
+export const readSinglePage = async (productId) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Related Product
+export const listRelated = async (productId) => {
+  try {
+    const response = await fetch(`${API}/products/related/${productId}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Braintree
+export const getBraintreeClientToken = async (userId, token) => {
+  try {
+    const response = await fetch(`${API}/braintree/getToken/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const processPayment = async (userId, token, paymentData) => {
+  try {
+    const response = await fetch(`${API}/braintree/payment/${userId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(paymentData),
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createOrder = async (userId, token, createOrderData) => {
+  try {
+    const response = await fetch(`${API}/order/create/${userId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ order: createOrderData }),
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};

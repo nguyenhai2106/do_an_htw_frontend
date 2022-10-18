@@ -3,7 +3,7 @@ import Layout from "../core/Layout";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth/index";
 import { createProduct, getCategories } from "./apiAdmin";
-import { userLinks } from "../core/AdminLink";
+import { adminLinks } from "../core/AdminLink";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -223,7 +223,7 @@ const AddProduct = () => {
       //   className={"container-fluid"}
     >
       <div className="row">
-        <div className="col-md-3">{userLinks()}</div>
+        <div className="col-md-3">{adminLinks()}</div>
         <div className="col-md-9">
           {showLoading()}
           {showError()}

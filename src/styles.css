@@ -56,3 +56,15 @@ Button {
     background-position: 0% 50%;
   }
 }
+
+/* Cart Badge */
+
+.cart-badge,
+.cart-badge:hover {
+  font-style: italic;
+  margin-left: 3px;
+}
+
+td {
+  vertical-align: middle;
+}

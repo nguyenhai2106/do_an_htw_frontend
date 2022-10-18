@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^5.2.1",
+    "bootstrap-icons": "^1.9.1",
     "braintree-web": "^3.45.0",
     "braintree-web-drop-in-react": "^1.0.7",
     "compression": "^1.7.4",
@@ -16,6 +17,7 @@
     "react": "^16.8.6",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^16.8.6",
+    "react-icons": "^4.6.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1"
   },

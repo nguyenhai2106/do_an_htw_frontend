@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import ProductCart from "../core/Card";
+import ProductCard from "../core/Card";
 import { getCategories, getFilteredProducts } from "./apiCore";
 import Checkbox from "./Checkbox";
 import Radiobox from "./RadioBox";
@@ -61,7 +61,7 @@ const Shop = () => {
       size > 0 &&
       size >= limit && (
         <Button variant="outline-warning" onClick={loadMore} className="mb-3">
-          Add to Cart
+          Load more product
         </Button>
       )
     );
@@ -124,7 +124,7 @@ const Shop = () => {
           <div className="row">
             {filteredResults.map((result, index) => (
               <div className="col-4 mb-3" key={index}>
-                <ProductCart product={result} />
+                <ProductCard product={result} />
               </div>
             ))}
           </div>

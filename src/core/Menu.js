@@ -1,8 +1,11 @@
 import React, { Fragment } from "react";
+import { FaOpencart } from "react-icons/fa";
 
 import { Link, withRouter } from "react-router-dom";
 
 import { signout, isAuthenticated } from "../auth/index";
+
+import { itemToTal } from "./cartHelper";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -13,14 +16,13 @@ const isActive = (history, path) => {
 };
 
 const Menu = ({ history }) => (
-  <div>
-    <ul className="nav bg-primary">
+  <div className="d-flex bg-primary justify-content-between">
+    <ul className="nav">
       <li className="nav-item">
         <Link className="nav-link" style={isActive(history, "/")} to={"/"}>
           Home
         </Link>
       </li>
-
       <li className="nav-item">
         <Link
           className="nav-link"
@@ -94,6 +96,23 @@ const Menu = ({ history }) => (
           </span>
         </li>
       )}
+    </ul>
+    <ul className="nav">
+      <li className="nav-item">
+        <Link
+          className="nav-link"
+          style={isActive(history, "/cart")}
+          to={"/cart"}
+        >
+          {" "}
+          <FaOpencart
+            style={itemToTal() > 0 ? { color: "red" } : { color: "white" }}
+          />
+          <sup>
+            <small className="cart-badge">{itemToTal()}</small>
+          </sup>
+        </Link>
+      </li>
     </ul>
   </div>
 );

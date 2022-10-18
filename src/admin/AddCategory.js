@@ -10,7 +10,7 @@ import Alert from "react-bootstrap/Alert";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 
-import { userLinks } from "../core/AdminLink";
+import { adminLinks } from "../core/AdminLink";
 
 const AddCategory = () => {
   const [name, setName] = useState("");
@@ -105,7 +105,7 @@ const AddCategory = () => {
       //   className={"container-fluid"}
     >
       <div className="row">
-        <div className="col-md-3">{userLinks()}</div>
+        <div className="col-md-3">{adminLinks()}</div>
         <div className="col-md-9">
           {showError()}
           {showSuccess()}

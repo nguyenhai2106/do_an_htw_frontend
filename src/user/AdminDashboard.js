@@ -6,7 +6,7 @@ import { isAuthenticated } from "../auth/index";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 
-import { userLinks } from "../core/AdminLink";
+import { adminLinks } from "../core/AdminLink";
 
 const AdminDashboard = () => {
   const {
@@ -37,9 +37,8 @@ const AdminDashboard = () => {
       className={"container-fluid"}
     >
       <div className="row">
-        <div className="col-3">{userLinks()}</div>
+        <div className="col-3">{adminLinks()}</div>
         <div className="col-9">{adminInfor()}</div>
-        {/* <div className="col-9"></div> */}
       </div>
     </Layout>
   );
