@@ -36,6 +36,15 @@ export const adminLinks = () => {
             Manage Orders
           </Link>
         </ListGroup.Item>
+        <ListGroup.Item>
+          <Link
+            className="nav-link"
+            to="/admin/products"
+            style={{ color: "blue" }}
+          >
+            Manage Product
+          </Link>
+        </ListGroup.Item>
       </ListGroup>
     </Card>
   );

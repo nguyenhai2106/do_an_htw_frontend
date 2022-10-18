@@ -112,7 +112,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     <div onBlur={() => setData({ ...data, error: "", success: "" })}>
       {data.clientToken !== null && products.length > 0 ? (
         <div>
-          <Form.Group controlId="formBasicDescription">
+          <Form.Group controlId="formBasicDescription" className="mb-3">
             <Form.Label>Address</Form.Label>
             <Form.Control
               as="textarea"
@@ -125,6 +125,9 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
           <DropIn
             options={{
               authorization: data.clientToken,
+              paypal: {
+                flow: "vault",
+              },
             }}
             onInstance={(instance) => (data.instance = instance)}
           />

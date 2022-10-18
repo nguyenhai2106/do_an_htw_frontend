@@ -90,3 +90,57 @@ export const updateOrderStatus = async (userId, token, orderId, status) => {
     console.log(error);
   }
 };
+
+export const getProducts = async () => {
+  try {
+    const response = await fetch(`${API}/products`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteProduct = async (productId, userId, token) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getProduct = async (productId) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateProduct = async (productId, userId, token, product) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}/${userId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: product,
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};

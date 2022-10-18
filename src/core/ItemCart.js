@@ -23,7 +23,7 @@ const ItemCart = ({
           <InputGroup>
             <Form.Control
               type="number"
-              value={count}
+              value={product.count}
               style={{ textAlign: "center" }}
               onChange={handleChange(product._id)}
             />
@@ -91,7 +91,7 @@ const ItemCart = ({
       </td>
       <td className="text-center">${product.price}</td>
       <td className="text-center">{showCartUpdateOptions(cartUpdate)}</td>
-      <td className="text-center">{product.price * count}</td>
+      <td className="text-center">{product.price * product.count}</td>
       <td className="text-center">
         {showRemoveButton(showRemoveProductButton)}
       </td>
