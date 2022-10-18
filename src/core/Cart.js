@@ -10,6 +10,7 @@ const Cart = () => {
     const [items, setItems] = useState([]);
     const [remove, setRemove] = useState(false);
     const [itemCount, setItemCount] = useState(false);
+    const [paid, setPaid] = useState(false);
     function onRemoveItem() {
         setRemove(!remove);
     }
@@ -22,8 +23,9 @@ const Cart = () => {
             setItems([]);
             setItemCount(false);
             setRemove(false);
+            setPaid(false);
         }
-    }, [remove, itemCount]);
+    }, [remove, itemCount, paid]);
 
     const showItems = items => {
         return (
@@ -67,7 +69,7 @@ const Cart = () => {
                 <div className="col-6">
                     <h2>Your cart sumary</h2>
                     <hr />
-                    <Checkout products={items} />
+                    <Checkout setPaid={setPaid} paid={paid} products={items} />
                 </div>
             </div>
         </Layout>
