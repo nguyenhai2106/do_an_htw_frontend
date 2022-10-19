@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Badge from "react-bootstrap/Badge";
 import Layout from "./Layout";
+import Review from "./Review";
 import { Link } from "react-router-dom";
-import { getProducts, readSinglePage, listRelated } from "../core/apiCore";
+import { readSinglePage, listRelated, reviewRelated } from "../core/apiCore";
 import { API } from "../config";
 import Figure from "react-bootstrap/Figure";
+import { createReview } from "./apiCore";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
 import ProductCard from "./Card";
 import { addItem } from "./cartHelper";
+import { isAuthenticated } from "../auth/index";
 
 require("dotenv").config();
 
@@ -18,6 +22,7 @@ const Product = (props) => {
   const [product, setProduct] = useState({});
   const [error, setError] = useState(false);
   const [relatedProduct, setRelatedProduct] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   const loadSingleProduct = (productId) => {
     readSinglePage(productId).then((data) => {
@@ -39,6 +44,16 @@ const Product = (props) => {
     });
   };
 
+  const loadListViewRelated = (productId) => {
+    reviewRelated(productId).then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setReviews(data);
+      }
+    });
+  };
+
   const addToCart = () => {
     addItem(product, () => {
       console.log(product);
@@ -49,6 +64,7 @@ const Product = (props) => {
     const productId = props.match.params.productId;
     loadSingleProduct(productId);
     loadListRelated(productId);
+    loadListViewRelated(productId);
   }, [props]);
 
   const styleCard = {
@@ -93,6 +109,46 @@ const Product = (props) => {
       <Badge pill bg="danger" style={styleStock}>
         Out Stock
       </Badge>
+    );
+  };
+
+  // Review
+  const [isDisabled, setIsDisabled] = useState(true);
+  const { user, token } = isAuthenticated();
+  const [newReview, setNewReview] = useState({
+    user: user._id,
+    product: props.match.params.productId,
+    description: "",
+  });
+
+  const [errorRV, setErrorRV] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleChange = (name) => (event) => {
+    setNewReview({
+      ...newReview,
+      [name]: event.target.value,
+    });
+  };
+
+  const clickSubmit = (event) => {
+    event.preventDefault();
+    const createReviewData = {
+      user: user._id,
+      product: props.match.params.productId,
+      description: newReview.description,
+    };
+    createReview(user._id, token, JSON.stringify(createReviewData)).then(
+      (data) => {
+        if (data.error) {
+          setError(data.error);
+        } else {
+          setErrorRV("");
+          setSuccess(true);
+          setNewReview({ ...newReview, description: "" });
+          loadListViewRelated(props.match.params.productId);
+        }
+      }
     );
   };
 
@@ -145,6 +201,7 @@ const Product = (props) => {
           </Card>
         </div>
         <div className="col-3 my-3">
+          <h3>Related Products</h3>
           {relatedProduct.map((product, index) => (
             <div key={index} className="mb-3">
               <ProductCard product={product} />
@@ -152,6 +209,33 @@ const Product = (props) => {
           ))}
         </div>
       </div>
+      {/* Review */}
+      {user && (
+        <div className="row">
+          {reviews.map((review, index) => (
+            <Review
+              key={index}
+              review={review}
+              loadListViewRelated={loadListViewRelated}
+            />
+          ))}
+          <Form onSubmit={clickSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicDescription">
+              <Form.Label>
+                <strong>Review</strong>
+              </Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Enter review..."
+                onChange={handleChange("description")}
+                value={newReview.description}
+              />
+            </Form.Group>
+            <Button type="submit">Post</Button>
+          </Form>
+        </div>
+      )}
     </Layout>
   );
 };

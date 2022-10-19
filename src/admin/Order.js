@@ -5,16 +5,6 @@ import { isAuthenticated } from "../auth/index";
 import { listOrders, getStatusValues } from "./apiAdmin";
 import { adminLinks } from "../core/AdminLink";
 import ItemOrder from "./ItemOrder";
-import ItemCart from "../core/ItemCart";
-
-import Figure from "react-bootstrap/Figure";
-import { API } from "../config";
-
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
 
 const Orders = () => {

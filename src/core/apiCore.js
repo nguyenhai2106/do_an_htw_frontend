@@ -130,3 +130,59 @@ export const createOrder = async (userId, token, createOrderData) => {
     console.log(error);
   }
 };
+
+// Related Product
+export const reviewRelated = async (productId) => {
+  try {
+    const response = await fetch(`${API}/review/related/${productId}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createReview = async (userId, token, createReviewData) => {
+  try {
+    const response = await fetch(`${API}/review/create/${userId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: createReviewData,
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateReview = async (productId) => {
+  try {
+    const response = await fetch(`${API}/review/related/${productId}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteReview = async (reviewId, userId, token) => {
+  try {
+    const response = await fetch(`${API}/review/${reviewId}/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};

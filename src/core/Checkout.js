@@ -78,7 +78,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
           paymentMethodNonce: nonce,
           amount: getTotal(products),
         };
-
+ 
         processPayment(userId, token, paymentData).then((response) => {
           // console.log(response);
           const createOrderData = {
