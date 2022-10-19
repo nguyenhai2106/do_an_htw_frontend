@@ -1,36 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Figure from "react-bootstrap/Figure";
 import { API } from "../config";
 import { updateItem, removeItem } from "./cartHelper";
-import { createReview, updateReview, deleteReview } from "../core/apiCore";
+import { getReview, editReview, deleteReview } from "../core/apiCore";
 import Button from "react-bootstrap/Button";
 import { isAuthenticated } from "../auth/index";
 import Card from "react-bootstrap/Card";
 
-const Review = ({ review, reviewUpdate, loadListViewRelated = (f) => f }) => {
+const Review = ({
+  review,
+  reviewUpdate,
+  destroy = (f) => f,
+  loadListViewRelated = (f) => f,
+}) => {
   // Review
   const [isDisabled, setIsDisabled] = useState(true);
+  const [display, setDisplay] = useState(true);
   const { user, token } = isAuthenticated();
-  const [newReview, setNewReview] = useState("");
 
-  const destroy = (reviewId) => {
-    deleteReview(reviewId, user._id, token).then((data) => {
+  const styleBtn = {
+    display: "none",
+  };
+
+  const DisplayBtn = () => {
+    setIsDisabled(false);
+    setDisplay(false);
+  };
+
+  const [textarea, setTextarea] = useState(review.description);
+
+  const handleChange = (event) => {
+    setTextarea(event.target.value);
+  };
+
+  const clickSubmit = (event) => {
+    const updateReviewData = {
+      description: textarea != "" ? textarea : review.description,
+    };
+    editReview(
+      review._id,
+      user._id,
+      token,
+      JSON.stringify(updateReviewData)
+    ).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        loadListViewRelated(review.product);
+        setIsDisabled(true);
+        setDisplay(true);
       }
     });
   };
-  const test = () => {
-    console.log(review._id);
-  };
 
   return (
-    <Card className="mb-2" style={{ border: "none" }}>
+    <Card className="mb-2 border-0">
       <div className="row">
         <div className="col-1 d-flex justify-content-center align-items-center">
           <Figure className="d-flex justify-content-center mb-0">
@@ -45,21 +71,34 @@ const Review = ({ review, reviewUpdate, loadListViewRelated = (f) => f }) => {
           </Figure>
         </div>
         <div className="col-11">
-          <Form.Label>
-            <strong>{review.user.name}</strong>
-          </Form.Label>
-          <Form.Control
-            disabled={isDisabled}
-            as="textarea"
-            rows={3}
-            placeholder="Enter description"
-            // onChange={handleChange("description")}
-            defaultValue={review.description}
-            style={{ background: "white" }}
-          />
+          <Form.Group>
+            <Form.Label>
+              <strong>{review.user.name}</strong>
+            </Form.Label>
+            <Form.Control
+              disabled={isDisabled}
+              as="textarea"
+              rows={3}
+              defaultValue={textarea}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
           {user._id === review.user._id && (
             <div className="d-flex">
-              <span className="btn me-2 text-primary p-0">Edit</span>
+              <span
+                onClick={() => clickSubmit()}
+                className="btn me-2 text-success p-0"
+                style={display ? styleBtn : null}
+              >
+                Confirm Edit
+              </span>
+              <span
+                onClick={() => DisplayBtn()}
+                className="btn me-2 text-primary p-0"
+              >
+                Edit
+              </span>
               <span
                 onClick={() => destroy(review._id)}
                 className="btn text-danger p-0"

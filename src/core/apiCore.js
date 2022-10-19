@@ -143,6 +143,17 @@ export const reviewRelated = async (productId) => {
   }
 };
 
+export const getReview = async (reviewId) => {
+  try {
+    const response = await fetch(`${API}/review/${reviewId}`, {
+      method: "GET",
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const createReview = async (userId, token, createReviewData) => {
   try {
     const response = await fetch(`${API}/review/create/${userId}`, {
@@ -159,11 +170,18 @@ export const createReview = async (userId, token, createReviewData) => {
     console.log(error);
   }
 };
+// router.put("/review/:reviewId/:userId", requireSignin, isAuth, update);
 
-export const updateReview = async (productId) => {
+export const editReview = async (reviewId, userId, token, updateReviewData) => {
   try {
-    const response = await fetch(`${API}/review/related/${productId}`, {
-      method: "GET",
+    const response = await fetch(`${API}/review/${reviewId}/${userId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: updateReviewData,
     });
     return await response.json();
   } catch (error) {

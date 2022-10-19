@@ -4,13 +4,7 @@ import Badge from "react-bootstrap/Badge";
 import Layout from "./Layout";
 import Review from "./Review";
 import { Link } from "react-router-dom";
-import {
-  readSinglePage,
-  listRelated,
-  reviewRelated,
-  deleteReview,
-  editReview,
-} from "../core/apiCore";
+import { readSinglePage, listRelated, reviewRelated } from "../core/apiCore";
 import { API } from "../config";
 import Figure from "react-bootstrap/Figure";
 import { createReview } from "./apiCore";
@@ -50,8 +44,8 @@ const Product = (props) => {
     });
   };
 
-  const loadListViewRelated = (productId) => {
-    reviewRelated(productId).then((data) => {
+  const loadListViewRelated = () => {
+    reviewRelated(props.match.params.productId).then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -73,10 +67,6 @@ const Product = (props) => {
     loadListViewRelated(productId);
   }, [props]);
 
-  useEffect(() => {
-    const productId = props.match.params.productId;
-    loadListViewRelated(productId);
-  }, []);
   const styleCard = {
     borderRadius: "4px",
   };
@@ -138,16 +128,6 @@ const Product = (props) => {
     setNewReview({
       ...newReview,
       [name]: event.target.value,
-    });
-  };
-
-  const destroy = (reviewId) => {
-    deleteReview(reviewId, user._id, token).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        loadListViewRelated(props.match.params.productId);
-      }
     });
   };
 
@@ -233,7 +213,11 @@ const Product = (props) => {
       {user && (
         <div className="row">
           {reviews.map((review, index) => (
-            <Review key={index} review={review} destroy={destroy} />
+            <Review
+              key={index}
+              review={review}
+              loadListViewRelated={loadListViewRelated}
+            />
           ))}
           <Form onSubmit={clickSubmit}>
             <Form.Group className="mb-3" controlId="formBasicDescription">

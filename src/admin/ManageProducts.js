@@ -15,6 +15,7 @@ const ManageProducts = () => {
   const [products, setProducts] = useState([]);
 
   const { user, token } = isAuthenticated();
+
   const loadProducts = () => {
     getProducts().then((data) => {
       if (data.error) {
@@ -78,7 +79,6 @@ const ManageProducts = () => {
         setValues({ ...values, error: data.error });
       } else {
         setValues({ ...values, categories: data, formData: new FormData() });
-        console.log(formData);
       }
     });
   };
