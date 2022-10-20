@@ -14,6 +14,7 @@ import Orders from "./admin/Order";
 import Profile from "./user/Profile";
 import ManageProducts from "./admin/ManageProducts";
 import UpdateProduct from "./admin/UpdateProduct";
+import { ToastContainer } from 'react-toastify';
 
 import Shop from "./core/Shop";
 import Cart from "./core/Cart";
@@ -48,6 +49,7 @@ const Routes = () => {
           component={UpdateProduct}
         />
       </Switch>
+      <ToastContainer/>
     </BrowserRouter>
   );
 };

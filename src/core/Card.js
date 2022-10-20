@@ -6,6 +6,8 @@ import { addItem } from "./cartHelper";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const ProductCard = ({
   product,
@@ -43,6 +45,16 @@ const ProductCard = ({
 
   const addToCart = () => {
     addItem(product, () => {
+      toast.success('Product has been added to cart!', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       setRedirect(true);
     });
   };
