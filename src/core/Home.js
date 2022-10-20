@@ -6,11 +6,10 @@ import Search from "./Search";
 
 require("dotenv").config();
 
-const Home = () => {
+const Home = (props) => {
   const [productBySell, setProductBySell] = useState([]);
   const [productByArrival, setProductByArrival] = useState([]);
   const [error, setError] = useState(false);
-
   const loadProductsBySell = () => {
     getProducts("sold").then((data) => {
       if (data.error) {
@@ -47,7 +46,7 @@ const Home = () => {
       <div className="row">
         {productBySell.map((product, index) => (
           <div key={index} className="col-3 mb-3">
-            <ProductCard product={product} />
+            <ProductCard product={product} pathCurrent={props.match.path} />
           </div>
         ))}
       </div>
@@ -56,7 +55,7 @@ const Home = () => {
       <div className="row">
         {productByArrival.map((product, index) => (
           <div key={index} className="col-3 mb-3">
-            <ProductCard product={product} />
+            <ProductCard product={product} pathCurrent={props.match.path} />
           </div>
         ))}
       </div>

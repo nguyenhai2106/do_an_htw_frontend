@@ -7,7 +7,11 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 
-const ProductCard = ({ product, showViewProductButton = true }) => {
+const ProductCard = ({
+  product,
+  showViewProductButton = true,
+  pathCurrent,
+}) => {
   const [redirect, setRedirect] = useState(false);
   const styleCard = {
     borderRadius: "4px",
@@ -45,7 +49,7 @@ const ProductCard = ({ product, showViewProductButton = true }) => {
 
   const shouldRedirect = (redirect) => {
     if (redirect) {
-      return <Redirect to="/cart" />;
+      return <Redirect to={pathCurrent} />;
     }
   };
 

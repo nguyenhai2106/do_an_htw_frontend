@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import { prices } from "./fixedPrices";
 import Search from "./Search";
 
-const Shop = () => {
+const Shop = (props) => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
@@ -124,7 +124,7 @@ const Shop = () => {
           <div className="row">
             {filteredResults.map((result, index) => (
               <div className="col-4 mb-3" key={index}>
-                <ProductCard product={result} />
+                <ProductCard product={result} pathCurrent={props.match.path} />
               </div>
             ))}
           </div>

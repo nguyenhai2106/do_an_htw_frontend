@@ -3,7 +3,7 @@ import moment from "moment";
 import Badge from "react-bootstrap/Badge";
 import Layout from "./Layout";
 import Review from "./Review";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   readSinglePage,
   listRelated,
@@ -62,7 +62,7 @@ const Product = (props) => {
 
   const addToCart = () => {
     addItem(product, () => {
-      console.log(product);
+      setRedirect(true);
     });
   };
 
@@ -121,6 +121,13 @@ const Product = (props) => {
       </Badge>
     );
   };
+  const [redirect, setRedirect] = useState(false);
+
+  const shouldRedirect = (redirect) => {
+    if (redirect) {
+      return <Redirect to={props.match.path} />;
+    }
+  };
 
   // Review
   const [isDisabled, setIsDisabled] = useState(true);
@@ -147,6 +154,7 @@ const Product = (props) => {
         console.log(data.error);
       } else {
         loadListViewRelated(props.match.params.productId);
+        setRedirect(true);
       }
     });
   };
@@ -224,7 +232,7 @@ const Product = (props) => {
           <h3>Related Products</h3>
           {relatedProduct.map((product, index) => (
             <div key={index} className="mb-3">
-              <ProductCard product={product} />
+              <ProductCard product={product} pathCurrent={props.match.url} />
             </div>
           ))}
         </div>
@@ -233,7 +241,13 @@ const Product = (props) => {
       {user && (
         <div className="row">
           {reviews.map((review, index) => (
-            <Review key={index} review={review} destroy={destroy} />
+            <Review
+              key={index}
+              review={review}
+              destroy={destroy}
+              reviews={reviews}
+              setReviews={setReviews}
+            />
           ))}
           <Form onSubmit={clickSubmit}>
             <Form.Group className="mb-3" controlId="formBasicDescription">

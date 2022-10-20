@@ -16,7 +16,7 @@ export const addItem = (item, next) => {
     localStorage.setItem("cart", JSON.stringify(cart));
     next();
   }
-};
+}; 
 
 export const itemToTal = () => {
   if (typeof window !== "undefined") {
