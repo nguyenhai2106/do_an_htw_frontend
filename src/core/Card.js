@@ -44,6 +44,10 @@ const ProductCard = ({
   const addToCart = () => {
     addItem(product, () => {
       setRedirect(true);
+      setSucces(true);
+      setTimeout(() => {
+        setSucces(false);
+      }, 1500);
     });
   };
 
@@ -67,8 +71,25 @@ const ProductCard = ({
     );
   };
 
+  const [success, setSucces] = useState(false);
+  const showSuccess = (success) => {
+    return (
+      <div
+        className="alert alert-success"
+        style={{
+          display: success ? "" : "none",
+          textAlign: "center",
+          borderRadius: "4px",
+        }}
+      >
+        <strong>Product has been added!</strong>
+      </div>
+    );
+  };
+
   return (
     <Card style={styleCard}>
+      {showSuccess(success)}
       <Card.Body>
         {shouldRedirect(redirect)}
         <ShowImage item={product} url="product" />

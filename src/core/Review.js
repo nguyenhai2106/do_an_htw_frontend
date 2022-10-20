@@ -9,6 +9,7 @@ import { getReview, editReview, deleteReview } from "../core/apiCore";
 import Button from "react-bootstrap/Button";
 import { isAuthenticated } from "../auth/index";
 import Card from "react-bootstrap/Card";
+import moment from "moment";
 
 const Review = ({
   review,
@@ -74,6 +75,9 @@ const Review = ({
           <Form.Group>
             <Form.Label>
               <strong>{review.user.name}</strong>
+              <p style={{ display: "inline", marginLeft: "10px" }}>
+                {moment(review.createdAt).fromNow()}
+              </p>
             </Form.Label>
             <Form.Control
               disabled={isDisabled}

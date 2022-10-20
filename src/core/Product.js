@@ -55,14 +55,37 @@ const Product = (props) => {
       if (data.error) {
         setError(data.error);
       } else {
+        console.log(data);
         setReviews(data);
       }
     });
   };
 
+  const [success, setSucces] = useState(false);
+  const showSuccess = (success) => {
+    return (
+      <div
+        className="alert alert-success"
+        style={{
+          display: success ? "" : "none",
+          textAlign: "center",
+          borderRadius: "4px",
+          width: "400px",
+          margin: "auto",
+        }}
+      >
+        <strong>Product has been added!</strong>
+      </div>
+    );
+  };
+
   const addToCart = () => {
     addItem(product, () => {
       setRedirect(true);
+      setSucces(true);
+      setTimeout(() => {
+        setSucces(false);
+      }, 1500);
     });
   };
 
@@ -132,9 +155,6 @@ const Product = (props) => {
     description: "",
   });
 
-  const [errorRV, setErrorRV] = useState(false);
-  const [success, setSuccess] = useState(false);
-
   const handleChange = (name) => (event) => {
     setNewReview({
       ...newReview,
@@ -164,8 +184,6 @@ const Product = (props) => {
         if (data.error) {
           setError(data.error);
         } else {
-          setErrorRV("");
-          setSuccess(true);
           setNewReview({ ...newReview, description: "" });
           loadListViewRelated(props.match.params.productId);
         }
@@ -179,6 +197,7 @@ const Product = (props) => {
       description={product.name}
       className={"container-fluid"}
     >
+      {showSuccess(success)}
       <div className="row">
         <div className="col-9 my-3">
           <Card style={styleCard}>

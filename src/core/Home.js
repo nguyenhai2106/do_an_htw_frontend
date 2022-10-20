@@ -10,6 +10,7 @@ const Home = (props) => {
   const [productBySell, setProductBySell] = useState([]);
   const [productByArrival, setProductByArrival] = useState([]);
   const [error, setError] = useState(false);
+
   const loadProductsBySell = () => {
     getProducts("sold").then((data) => {
       if (data.error) {
@@ -50,7 +51,6 @@ const Home = (props) => {
           </div>
         ))}
       </div>
-
       <h3 className="mb-2">New Arrivals</h3>
       <div className="row">
         {productByArrival.map((product, index) => (

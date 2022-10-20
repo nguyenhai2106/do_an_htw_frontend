@@ -26,6 +26,8 @@ const ItemCart = ({
               value={product.count}
               style={{ textAlign: "center" }}
               onChange={handleChange(product._id)}
+              min="1"
+              max={product.quantity}
             />
           </InputGroup>
         </div>
@@ -52,8 +54,14 @@ const ItemCart = ({
   };
 
   const handleChange = (productId) => (event) => {
+    if (event.target.value < 1) {
+      setCount(1);
+    } else if (event.target.value > product.quantity) {
+      setCount(product.quantity);
+    } else {
+      setCount(event.target.value);
+    }
     setRun(!run);
-    setCount(event.target.value < 1 ? 1 : event.target.value);
     if (event.target.value >= 1) {
       updateItem(productId, event.target.value);
     }
