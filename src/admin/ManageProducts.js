@@ -3,6 +3,7 @@ import Layout from "../core/Layout";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth/index";
 import { createProduct, getCategories } from "./apiAdmin";
+import { getFilteredProducts } from "../core/apiCore";
 import { adminLinks } from "../core/AdminLink";
 
 import Button from "react-bootstrap/Button";
@@ -13,15 +14,28 @@ import { getProducts, deleteProduct } from "./apiAdmin";
 
 const ManageProducts = () => {
   const [products, setProducts] = useState([]);
-
+  const [skip, setSkip] = useState(0);
+  const [size, setSize] = useState(0);
+  const [limit, setLimit] = useState(8);
+  
   const { user, token } = isAuthenticated();
 
   const loadProducts = () => {
-    getProducts().then((data) => {
+    // getProducts().then((data) => {
+    //   if (data.error) {
+    //     console.log(data.error);
+    //   } else {
+    //     setProducts(data);
+    //   }
+    // });
+    getFilteredProducts(skip, limit, "").then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setProducts(data);
+        console.log(data);
+        setProducts([...products, ...data.data]);
+        setSize(data.size);
+        setSkip(0);
       }
     });
   };
@@ -83,6 +97,30 @@ const ManageProducts = () => {
     });
   };
 
+  const loadMore = () => {
+    let toSkip = skip + limit;
+    getFilteredProducts(toSkip, limit, "").then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        console.log(data);
+        setProducts([...products, ...data.data]);
+        setSize(data.size);
+        setSkip(toSkip);
+      }
+    });
+  };
+
+  const loadMoreButton = () => {
+    return (
+      size > 0 &&
+      size >= limit && (
+        <Button variant="outline-warning" onClick={loadMore} className="mb-3">
+          Load more product
+        </Button>
+      )
+    );
+  };
   useEffect(() => {
     init();
   }, []);
@@ -286,6 +324,7 @@ const ManageProducts = () => {
               <br />
             </div>
           </div>
+          {loadMoreButton()}
         </div>
       </div>
     </Layout>

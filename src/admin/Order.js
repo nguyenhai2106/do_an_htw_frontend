@@ -2,25 +2,63 @@ import React, { useEffect, useState } from "react";
 import Layout from "../core/Layout";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth/index";
-import { listOrders, getStatusValues } from "./apiAdmin";
+import { listOrders, getStatusValues, getListOrderPagination } from "./apiAdmin";
 import { adminLinks } from "../core/AdminLink";
 import ItemOrder from "./ItemOrder";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
   const [statusValues, setStatusValues] = useState([]);
   const { user, token } = isAuthenticated();
+  const [skip, setSkip] = useState(0);
+  const [size, setSize] = useState(0);
+  const [limit, setLimit] = useState(5);
 
   const loadOrders = () => {
-    listOrders(user._id, token).then((data) => {
+    // listOrders(user._id, token).then((data) => {
+    //   if (data.error) {
+    //     console.log(data.error);
+    //   } else {
+    //     setOrders(data);
+    //   }
+    // });
+    getListOrderPagination(skip, limit).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setOrders(data);
+        console.log(data);
+        setOrders([...orders, ...data.data]);
+        setSize(data.size);
+        setSkip(0);
       }
     });
+  };
+  const loadMore = () => {
+    let toSkip = skip + limit;
+    getListOrderPagination(toSkip, limit).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        console.log(data);
+        setOrders([...orders, ...data.data]);
+        setSize(data.size);
+        setSkip(toSkip);
+      }
+    });
+  };
+
+  const loadMoreButton = () => {
+    return (
+      size > 0 &&
+      size >= limit && (
+        <Button variant="outline-warning" onClick={loadMore} className="mb-3">
+          Load more order
+        </Button>
+      )
+    );
   };
   const loadStatusValues = () => {
     getStatusValues(user._id, token).then((data) => {
@@ -128,6 +166,7 @@ const Orders = () => {
             {renderOrders(orders)}
           </Table>
           {renderItems(products)}
+          {loadMoreButton()}
         </div>
       </div>
     </Layout>

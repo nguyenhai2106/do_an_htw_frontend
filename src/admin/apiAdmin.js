@@ -59,6 +59,23 @@ export const listOrders = async (userId, token) => {
   }
 };
 
+export const getListOrderPagination = async (skip, limit) => {
+  const data = { limit, skip };
+  try {
+    const response = await fetch(`${API}/order/pagination`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getStatusValues = async (userId, token) => {
   try {
     const response = await fetch(`${API}/order/status-values/${userId}`, {
