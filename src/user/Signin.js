@@ -5,6 +5,8 @@ import { Link, Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Import Sigh In
 import { signin, authenticate, isAuthenticated } from "../auth/index";
@@ -34,6 +36,16 @@ const Signin = () => {
         setValues({ ...values, error: data.error, loading: false });
       } else {
         authenticate(data, () => {
+          toast.success('Logged in successfully!', {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
           setValues({
             ...values,
             redirectToReferrer: true,
@@ -71,15 +83,19 @@ const Signin = () => {
   );
 
   const showError = () => {
-    return (
-      <Alert
-        key={"danger"}
-        variant={"danger"}
-        style={{ display: error ? "" : "none" }}
-      >
-        {error}
-      </Alert>
-    );
+    if(error){
+      return toast.error(`${error}`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    else return "none";
   };
 
   const showLoading = () => {
@@ -110,7 +126,7 @@ const Signin = () => {
   return (
     <Layout
       title="Sign In"
-      description="Sign Ip to Node.js React.js E-commerce App!"
+      description="Welcome back!"
       className={"container col-md-8 offset-md-2"}
     >
       {showError()}

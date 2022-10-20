@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Import Sigh Up
 import { signup } from "../auth/index";
@@ -80,15 +82,19 @@ const Signup = () => {
   );
 
   const showError = () => {
-    return (
-      <Alert
-        key={"danger"}
-        variant={"danger"}
-        style={{ display: error ? "" : "none" }}
-      >
-        {error}
-      </Alert>
-    );
+    if(error){
+      return toast.error(`${error}`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    else return "none";
   };
 
   const showSuccess = () => {
@@ -109,7 +115,7 @@ const Signup = () => {
   return (
     <Layout
       title="Sign Up"
-      description="Sign Up to Node.js React.js E-commerce App!"
+      description="The key to unlock your knowledge"
       className={"container col-md-8 offset-md-2"}
     >
       {showError()}

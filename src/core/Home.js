@@ -39,7 +39,7 @@ const Home = (props) => {
   return (
     <Layout
       title="Home Page"
-      description="Node.js React.js E-commerce App!"
+      description="Good books, like good friends, are few and chosen; the more select, the more enjoyable. - Louisa May Alcott"
       className={"container-fluid"}
     >
       <Search />

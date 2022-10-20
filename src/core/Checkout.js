@@ -9,6 +9,8 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
 import { emptyCart } from "./cartHelper";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Form from "react-bootstrap/Form";
 
@@ -86,6 +88,16 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
             address: deliveryAdress,
           };
           createOrder(userId, token, createOrderData).then((response) => {
+            toast.success('Payment successfully!', {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             emptyCart(() => {
               setData({ ...data, success: true });
               setRun(!run);
@@ -95,6 +107,16 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
       })
       .catch((error) => {
         console.log("dropin error: ", error);
+        toast.error(`${error.message}`, {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setData({ ...data, error: error.message });
       });
   };
@@ -137,36 +159,12 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     </div>
   );
 
-  const showError = (error) => {
-    return (
-      <div
-        className="alert alert-danger"
-        style={{ display: error ? "" : "none", textAlign: "center" }}
-      >
-        {error}
-      </div>
-    );
-  };
-
-  const showSuccess = (success) => {
-    return (
-      <div
-        className="alert alert-success"
-        style={{ display: success ? "" : "none", textAlign: "center" }}
-      >
-        Your payment was successful!
-      </div>
-    );
-  };
-
   return (
     <div>
       <div className="d-flex justify-content-between">
         <h4>Total:</h4>
         <h4>${getTotal(products)}</h4>
       </div>
-      {showSuccess(data.success)}
-      {showError(data.error)}
       {showCheckout()}
     </div>
   );

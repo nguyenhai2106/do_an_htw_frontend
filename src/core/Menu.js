@@ -1,11 +1,13 @@
 import React, { Fragment } from "react";
-import { FaOpencart } from "react-icons/fa";
+import { FaOpencart, FaBookReader } from "react-icons/fa";
 
 import { Link, withRouter } from "react-router-dom";
 
 import { signout, isAuthenticated } from "../auth/index";
 
 import { itemToTal } from "./cartHelper";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -20,6 +22,7 @@ const Menu = ({ history }) => (
     <ul className="nav">
       <li className="nav-item">
         <Link className="nav-link" style={isActive(history, "/")} to={"/"}>
+          <FaBookReader style={{width: "50px", height: "30px"}}/>
           Home
         </Link>
       </li>
@@ -88,6 +91,16 @@ const Menu = ({ history }) => (
             style={{ cursor: "pointer", color: "#ffffff" }}
             onClick={() =>
               signout(() => {
+                toast.info('Sign Out!', {
+                  position: "top-center",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
                 history.push("/");
               })
             }
@@ -97,7 +110,7 @@ const Menu = ({ history }) => (
         </li>
       )}
     </ul>
-    <ul className="nav">
+    <ul className="nav" style={{marginRight: "30px"}}>
       <li className="nav-item">
         <Link
           className="nav-link"
@@ -106,7 +119,7 @@ const Menu = ({ history }) => (
         >
           {" "}
           <FaOpencart
-            style={itemToTal() > 0 ? { color: "red" } : { color: "white" }}
+            style={itemToTal() > 0 ? { color: "red", width: "30px", height: "30px" } : { color: "white", width: "30px", height: "30px" }}
           />
           <sup>
             <small className="cart-badge">{itemToTal()}</small>
