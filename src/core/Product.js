@@ -123,12 +123,6 @@ const Product = (props) => {
   };
   const [redirect, setRedirect] = useState(false);
 
-  const shouldRedirect = (redirect) => {
-    if (redirect) {
-      return <Redirect to={props.match.path} />;
-    }
-  };
-
   // Review
   const [isDisabled, setIsDisabled] = useState(true);
   const { user, token } = isAuthenticated();
@@ -154,7 +148,6 @@ const Product = (props) => {
         console.log(data.error);
       } else {
         loadListViewRelated(props.match.params.productId);
-        setRedirect(true);
       }
     });
   };
