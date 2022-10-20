@@ -31,10 +31,8 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     getBraintreeClientToken(userId, token).then((data) => {
       if (data.error) {
         console.log(data.error);
-
         setData({ ...data, error: data.error });
       } else {
-        console.log(data);
         setData({ clientToken: data.clientToken });
       }
     });
@@ -78,7 +76,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
           paymentMethodNonce: nonce,
           amount: getTotal(products),
         };
- 
+
         processPayment(userId, token, paymentData).then((response) => {
           // console.log(response);
           const createOrderData = {
