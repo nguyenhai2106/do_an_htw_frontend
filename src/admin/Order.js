@@ -97,17 +97,25 @@ const Orders = () => {
   const renderOrders = (orders) => {
     return (
       <tbody>
-        {orders.map((order, index) => (
-          <ItemOrder
-            order={order}
-            key={index}
-            setProducts={setProducts}
-            statusValues={statusValues}
-            user={user}
-            token={token}
-            loadOrders={loadOrders}
-          />
-        ))}
+        {orders
+          .sort((a, b) => {
+            const nameA = a._id.toUpperCase();
+            const nameB = b._id.toUpperCase();
+            if (nameA > nameB) return -1;
+            if (nameA < nameB) return 1;
+            return 0;
+          })
+          .map((order, index) => (
+            <ItemOrder
+              order={order}
+              key={index}
+              setProducts={setProducts}
+              statusValues={statusValues}
+              user={user}
+              token={token}
+              loadOrders={loadOrders}
+            />
+          ))}
       </tbody>
     );
   };

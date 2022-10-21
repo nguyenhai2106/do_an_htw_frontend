@@ -239,6 +239,37 @@ const Product = (props) => {
               </div>
             </div>
           </Card>
+          {/* Review */}
+
+          <div className="row mt-3">
+            {reviews.map((review, index) => (
+              <Review
+                key={index}
+                review={review}
+                destroy={destroy}
+                reviews={reviews}
+                setReviews={setReviews}
+              />
+            ))}
+
+            {user && (
+              <Form onSubmit={clickSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicDescription">
+                  <Form.Label>
+                    <strong>Review</strong>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="Enter review..."
+                    onChange={handleChange("description")}
+                    value={newReview.description}
+                  />
+                </Form.Group>
+                <Button type="submit">Post</Button>
+              </Form>
+            )}
+          </div>
         </div>
         <div className="col-3 my-3">
           <h3>Related Products</h3>
@@ -249,35 +280,6 @@ const Product = (props) => {
           ))}
         </div>
       </div>
-      {/* Review */}
-      {user && (
-        <div className="row">
-          {reviews.map((review, index) => (
-            <Review
-              key={index}
-              review={review}
-              destroy={destroy}
-              reviews={reviews}
-              setReviews={setReviews}
-            />
-          ))}
-          <Form onSubmit={clickSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicDescription">
-              <Form.Label>
-                <strong>Review</strong>
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Enter review..."
-                onChange={handleChange("description")}
-                value={newReview.description}
-              />
-            </Form.Group>
-            <Button type="submit">Post</Button>
-          </Form>
-        </div>
-      )}
     </Layout>
   );
 };
