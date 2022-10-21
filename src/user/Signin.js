@@ -84,7 +84,7 @@ const Signin = () => {
 
   const showError = () => {
     if (error) {
-      return toast.error(`${error}`, {
+      toast.error(`${error}`, {
         position: "top-center",
         autoClose: 1500,
         hideProgressBar: false,
@@ -94,7 +94,7 @@ const Signin = () => {
         progress: undefined,
         theme: "light",
       });
-    } else return "none";
+    }
   };
 
   const showLoading = () => {
@@ -102,10 +102,8 @@ const Signin = () => {
       <Alert
         key={"info"}
         variant={"info"}
-        style={{ display: loading ? "" : "none" }}
-      >
-        <h2>Loading...</h2>
-      </Alert>
+        style={{ display: loading ? "hidden" : "none" }}
+      ></Alert>
     );
   };
 

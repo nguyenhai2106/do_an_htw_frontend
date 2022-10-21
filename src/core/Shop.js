@@ -73,13 +73,8 @@ const Shop = (props) => {
   }, []);
 
   const handleFilters = (filters, filterBy) => {
-    // console.log("SHOP", filters, filterBy);
     const newFilters = { ...myFilters };
     newFilters.filters[filterBy] = filters;
-    // if (filterBy === "price") {
-    //   let priceValues = handlePrice(filters);
-    //   newFilters.filters[filterBy] = filters;
-    // }
     loadFilteredResults(myFilters.filters);
     setMyFilters(newFilters);
   };

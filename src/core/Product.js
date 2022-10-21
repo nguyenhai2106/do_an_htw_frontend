@@ -162,6 +162,7 @@ const Product = (props) => {
       user: user._id,
       product: props.match.params.productId,
     });
+    console.log(user);
   };
 
   const destroy = (reviewId) => {

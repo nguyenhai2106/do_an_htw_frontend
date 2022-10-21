@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Import Sigh Up
 import { signup } from "../auth/index";
@@ -82,8 +82,8 @@ const Signup = () => {
   );
 
   const showError = () => {
-    if(error){
-      return toast.error(`${error}`, {
+    if (error) {
+      toast.error(`${error}`, {
         position: "top-center",
         autoClose: 1500,
         hideProgressBar: false,
@@ -94,7 +94,6 @@ const Signup = () => {
         theme: "light",
       });
     }
-    else return "none";
   };
 
   const showSuccess = () => {
@@ -104,7 +103,7 @@ const Signup = () => {
         variant={"success"}
         style={{ display: success ? "" : "none" }}
       >
-        New account is created. Please{" "}
+        New account is created.
         <Link to="/signin" style={{ textDecoration: "none" }}>
           Sign In
         </Link>
@@ -115,7 +114,7 @@ const Signup = () => {
   return (
     <Layout
       title="Sign Up"
-      description="The key to unlock your knowledge"
+      description="The key to unlock your knowledge!"
       className={"container col-md-8 offset-md-2"}
     >
       {showError()}
