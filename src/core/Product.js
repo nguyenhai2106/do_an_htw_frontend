@@ -150,8 +150,8 @@ const Product = (props) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const { user, token } = isAuthenticated();
   const [newReview, setNewReview] = useState({
-    user: user._id,
-    product: props.match.params.productId,
+    user: "",
+    product: "",
     description: "",
   });
 
@@ -159,6 +159,8 @@ const Product = (props) => {
     setNewReview({
       ...newReview,
       [name]: event.target.value,
+      user: user._id,
+      product: props.match.params.productId,
     });
   };
 

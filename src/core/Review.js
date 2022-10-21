@@ -88,7 +88,7 @@ const Review = ({
             />
           </Form.Group>
 
-          {user._id === review.user._id && (
+          {user && user._id === review.user._id && (
             <div className="d-flex">
               <span
                 onClick={() => clickSubmit()}
