@@ -68,3 +68,13 @@ Button {
 td {
   vertical-align: middle;
 }
+
+ul li {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+ul li a {
+  height: 100%;
+  line-height: 51.469px;
+}
