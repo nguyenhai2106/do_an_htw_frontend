@@ -5,16 +5,16 @@ import { Link, Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Import Sigh In
 import { signin, authenticate, isAuthenticated } from "../auth/index";
 
 const Signin = () => {
   const [values, setValues] = useState({
-    email: "khoongrox@gmail.com",
-    password: "ngaoop123@",
+    email: "",
+    password: "",
     error: "",
     loading: false,
     redirectToReferrer: false,
@@ -36,7 +36,7 @@ const Signin = () => {
         setValues({ ...values, error: data.error, loading: false });
       } else {
         authenticate(data, () => {
-          toast.success('Logged in successfully!', {
+          toast.success("Logged in successfully!", {
             position: "top-center",
             autoClose: 1500,
             hideProgressBar: false,
@@ -83,7 +83,7 @@ const Signin = () => {
   );
 
   const showError = () => {
-    if(error){
+    if (error) {
       return toast.error(`${error}`, {
         position: "top-center",
         autoClose: 1500,
@@ -94,8 +94,7 @@ const Signin = () => {
         progress: undefined,
         theme: "light",
       });
-    }
-    else return "none";
+    } else return "none";
   };
 
   const showLoading = () => {
