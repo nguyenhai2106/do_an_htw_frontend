@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import Layout from "../core/Layout";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth/index";
-import { listOrders, getStatusValues, getListOrderPagination } from "./apiAdmin";
+import {
+  listOrders,
+  getStatusValues,
+  getListOrderPagination,
+} from "./apiAdmin";
 import { adminLinks } from "../core/AdminLink";
 import ItemOrder from "./ItemOrder";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
+import Form from "react-bootstrap/Form";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -15,7 +21,11 @@ const Orders = () => {
   const { user, token } = isAuthenticated();
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(0);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(1000);
+  const [data, setData] = useState("");
+
+  const [searchOrder, setSearchOrder] = useState([]);
+  const [dataOrder, setDataOrder] = useState([]);
 
   const loadOrders = () => {
     // listOrders(user._id, token).then((data) => {
@@ -31,6 +41,7 @@ const Orders = () => {
       } else {
         console.log(data);
         setOrders([...orders, ...data.data]);
+        setDataOrder([...dataOrder, ...data.data]);
         setSize(data.size);
         setSkip(0);
       }
@@ -142,6 +153,28 @@ const Orders = () => {
     );
   };
 
+  const handleChange = (name) => (event) => {
+    setData(event.target.value);
+    if (event.target.value === "") {
+      setOrders(dataOrder);
+    }
+  };
+
+  const clickSearch = (event) => {
+    event.preventDefault();
+    if (data != "") {
+      let arraySearch = dataOrder.filter((order) => {
+        return (
+          order._id.toLowerCase().includes(data, 0) ||
+          order.transaction_id.toLowerCase().includes(data, 0)
+        );
+      });
+      setOrders(arraySearch);
+    } else {
+      setOrders(dataOrder);
+    }
+  };
+
   return (
     <Layout
       title="Orders"
@@ -149,9 +182,26 @@ const Orders = () => {
     >
       <div className="row">
         <div className="col-md-2">{adminLinks()}</div>
+
         <div className="col-md-10">
-          {showOrderLength(orders)}
-          <Table striped bordered hover>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 mx-auto my-2">
+                <Form onSubmit={clickSearch}>
+                  <InputGroup>
+                    <Form.Control
+                      type="search"
+                      onChange={handleChange("search")}
+                      placeholder="Search order..."
+                    />
+                    <Button type="submit">Search</Button>
+                  </InputGroup>
+                </Form>
+              </div>
+            </div>
+          </div>
+
+          <Table striped bordered hover className="mt-2">
             <thead className="text-center">
               <tr>
                 <th>Order ID</th>

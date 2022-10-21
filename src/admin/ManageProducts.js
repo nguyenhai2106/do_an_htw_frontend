@@ -9,6 +9,7 @@ import { adminLinks } from "../core/AdminLink";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import SearchProduct from "./SearchProduct";
 
 import { getProducts, deleteProduct } from "./apiAdmin";
 
@@ -17,7 +18,7 @@ const ManageProducts = () => {
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(0);
   const [limit, setLimit] = useState(8);
-  
+
   const { user, token } = isAuthenticated();
 
   const loadProducts = () => {
@@ -155,100 +156,6 @@ const ManageProducts = () => {
       }
     });
   };
-  const newPostForm = () => (
-    <Form onSubmit={clickSubmit}>
-      <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Photo</Form.Label>
-        <Form.Control
-          type="file"
-          name="photo"
-          accept="image/*"
-          onChange={handleChange("photo")}
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter name"
-          onChange={handleChange("name")}
-          value={name}
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicDescription">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          placeholder="Enter description"
-          onChange={handleChange("description")}
-          value={description}
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPrice">
-        <Form.Label>Price</Form.Label>
-        <Form.Control
-          type="number"
-          placeholder="Enter price"
-          onChange={handleChange("price")}
-          value={price}
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicCategory">
-        <Form.Label>Category</Form.Label>
-        <Form.Select onChange={handleChange("category")} required>
-          <option>Please select</option>
-          {categories &&
-            categories.map((category, index) => (
-              <option key={index} value={category._id}>
-                {category.name}
-              </option>
-            ))}
-        </Form.Select>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicShipping">
-        <Form.Label>Shipping</Form.Label>
-        <Form.Select onChange={handleChange("shipping")} required>
-          <option>Please select</option>
-          <option value="false">No</option>
-          <option value="true">Yes</option>
-        </Form.Select>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Quantity</Form.Label>
-        <Form.Control
-          type="number"
-          placeholder="Enter quantity"
-          onChange={handleChange("quantity")}
-          value={quantity}
-        />
-      </Form.Group>
-
-      <Button variant="outline-primary" type="submit">
-        Create Product
-      </Button>
-    </Form>
-  );
-
-  const goBack = () => {
-    return (
-      <div className="mt-5">
-        <Link
-          to={"/admin/dashboard"}
-          className="text-warning"
-          style={{ textDecoration: "none" }}
-        >
-          Back to Dashboard
-        </Link>
-      </div>
-    );
-  };
 
   const showError = () => {
     return (
@@ -291,6 +198,7 @@ const ManageProducts = () => {
         <div className="col-md-9">
           <div className="row">
             <div className="col-12">
+              <SearchProduct />
               <h4 className="text-center">Total {products.length} products</h4>
               <ul className="list-group">
                 {products.map((product, i) => (
