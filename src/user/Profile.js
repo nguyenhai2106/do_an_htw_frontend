@@ -19,7 +19,7 @@ const Profile = ({ match }) => {
     success: false,
   });
 
-  const { token } = isAuthenticated();
+  const { token, user } = isAuthenticated();
 
   const { name, email, password, error, success } = values;
 
@@ -59,6 +59,7 @@ const Profile = ({ match }) => {
               ...values,
               name: data.name,
               email: data.email,
+              password: data.password,
               success: true,
             });
           });
@@ -79,7 +80,7 @@ const Profile = ({ match }) => {
         <Form.Control
           type="text"
           onChange={handleChange("name")}
-          defaultValue={values.name}
+          value={values.name}
         />
       </Form.Group>
 
@@ -87,8 +88,8 @@ const Profile = ({ match }) => {
         <Form.Label>Email</Form.Label>
         <Form.Control
           type="text"
-          onChange={handleChange("price")}
-          defaultValue={values.email}
+          onChange={handleChange("email")}
+          value={values.email}
         />
       </Form.Group>
 
@@ -97,7 +98,7 @@ const Profile = ({ match }) => {
         <Form.Control
           type="password"
           onChange={handleChange("password")}
-          defaultValue={values.password}
+          value={values.password}
         />
       </Form.Group>
       <Button variant="outline-primary" onClick={clickSubmit}>

@@ -55,8 +55,7 @@ const Product = (props) => {
       if (data.error) {
         setError(data.error);
       } else {
-        console.log(data);
-        setReviews(data);
+        setReviews([...data]);
       }
     });
   };
@@ -96,10 +95,6 @@ const Product = (props) => {
     loadListViewRelated(productId);
   }, [props]);
 
-  useEffect(() => {
-    const productId = props.match.params.productId;
-    loadListViewRelated(productId);
-  }, []);
   const styleCard = {
     borderRadius: "4px",
   };
@@ -165,7 +160,11 @@ const Product = (props) => {
     console.log(user);
   };
 
-  const destroy = (reviewId) => {
+  const destroy = (reviewId, index) => {
+    // const tests = reviews;
+    // tests.splice(index, 1);
+    // console.log(tests);
+    // setReviews(tests);
     deleteReview(reviewId, user._id, token).then((data) => {
       if (data.error) {
         console.log(data.error);
@@ -250,8 +249,7 @@ const Product = (props) => {
                 key={index}
                 review={review}
                 destroy={destroy}
-                reviews={reviews}
-                setReviews={setReviews}
+                index={index}
               />
             ))}
 

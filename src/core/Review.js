@@ -12,10 +12,11 @@ import Card from "react-bootstrap/Card";
 import moment from "moment";
 
 const Review = ({
+  index,
   review,
   reviewUpdate,
   destroy = (f) => f,
-  loadListViewRelated = (f) => f,
+  loadSingleProduct = (f) => f,
 }) => {
   // Review
   const [isDisabled, setIsDisabled] = useState(true);
@@ -83,7 +84,7 @@ const Review = ({
               disabled={isDisabled}
               as="textarea"
               rows={3}
-              defaultValue={textarea}
+              value={textarea}
               onChange={handleChange}
             />
           </Form.Group>
@@ -104,7 +105,7 @@ const Review = ({
                 Edit
               </span>
               <span
-                onClick={() => destroy(review._id)}
+                onClick={() => destroy(review._id, index)}
                 className="btn text-danger p-0"
               >
                 Delete

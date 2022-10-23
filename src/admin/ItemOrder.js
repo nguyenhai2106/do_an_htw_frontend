@@ -24,7 +24,7 @@ const ItemOrder = ({
         if (data.error) {
           console.log("Status update failed!");
         } else {
-          loadOrders();
+          // loadOrders();
         }
       }
     );
